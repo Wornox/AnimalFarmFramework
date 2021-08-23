@@ -165,13 +165,14 @@ public class Pack
 
         foreach (var m in memebers)
         {
-            m.GetComponent<PackController>().SetPackStatus(this);
+            var ACR = m.GetComponent<AnimalComponentReferences>();
+            ACR.packController.SetPackStatus(this);
             if (oldest == null)
             {
                 oldest = m;
                 continue;
             }
-            if (m.GetComponent<AnimalProperties>().age > oldest.GetComponent<AnimalProperties>().age) oldest = m;
+            if (ACR.ageController.age > oldest.GetComponent<AgeController>().age) oldest = m;
         }
 
         

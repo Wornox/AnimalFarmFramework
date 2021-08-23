@@ -9,19 +9,20 @@ public class VegetableSpawner : MonoBehaviour
 {
     public float grainSpawnTimer;
     public float maxGrainNumber;
-    public float currentGrainNumber;
+    public float currentGrainNumber = 0;
     public float regenateRate;
 
     public VegetableType vegetableType;
     public GameObject grainPrefab;
 
+    public CSVExporter cSVExporter;
     private CSVExport csv;
 
     public bool drawHTSlider = true;
 
     void Start()
     {
-        csv = new CSVExport("Grain", AnimalType.None);
+        csv = new CSVExport(cSVExporter.dirPath, "Grain");
         csv.AddContent("System Time:");
         csv.AddContent("Simulation Time:");
         csv.AddContent("VegetableType:");
@@ -64,8 +65,10 @@ public class VegetableSpawner : MonoBehaviour
 
     public void SpawnGrain()
     {
-        currentGrainNumber = transform.childCount;
         if (currentGrainNumber > maxGrainNumber) return;
+
+        currentGrainNumber++;
+
         var randompos = TerrainController.GetRandomPosOnTerrainSet();
         if (Vector3.Equals(randompos, Vector3.negativeInfinity)) return;
         var randomNavPos = NavMeshController.GetRandomPointOnNavmesh(1, randompos);
@@ -92,7 +95,7 @@ public class VegetableSpawner : MonoBehaviour
     {
         string s = "Vegetation :" + System.Environment.NewLine + System.Environment.NewLine;
         s += "Grain" + " -> ";
-        s += "Current: " + currentGrainNumber + " | Limit: " + maxGrainNumber + " | SpawnTime(sec): " + grainSpawnTimer + " | RegenateRate(%/sec): " + regenateRate;
+        s += "Current: " + currentGrainNumber + "," + transform.childCount + " | Limit: " + maxGrainNumber + " | SpawnTime(sec): " + grainSpawnTimer + " | RegenateRate(%/sec): " + regenateRate;
         s += System.Environment.NewLine;
         return s;
     }

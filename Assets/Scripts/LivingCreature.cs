@@ -10,6 +10,7 @@ public class LivingCreature : MonoBehaviour
     AnimalProperties AP;
     AnimalBehaviorController ABC;
     AnimalController AC;
+    VegetableSpawner VS;
 
     public CreatureType creatureType;
 
@@ -18,8 +19,7 @@ public class LivingCreature : MonoBehaviour
     private Animator animator;
     private bool canBeDeleted = false; // only after death registery can delete the whole animal
 
-    private float checkElderDeathAge = 0f;
-    private float checkElderDeathTimer = 10f;
+
 
     public float vegetableRegenRate = 1.2f;
 
@@ -30,6 +30,7 @@ public class LivingCreature : MonoBehaviour
         ABC = GetComponent<AnimalBehaviorController>();
         if (ACR.animalMeshController != null && ACR.animalMeshController.animator != null) animator = ACR.animalMeshController.animator;
         AC = GameObject.Find("AnimalController").GetComponent<AnimalController>();
+        VS = GameObject.Find("GrainObject").GetComponent<VegetableSpawner>();
     }
 
     void Update()
@@ -39,6 +40,8 @@ public class LivingCreature : MonoBehaviour
             if (creatureType == CreatureType.Vegetable)
             {
                 Destroy(gameObject);
+                VS.currentGrainNumber--;
+
             }
             else if (creatureType == CreatureType.Animal)
             {
@@ -70,8 +73,8 @@ public class LivingCreature : MonoBehaviour
         }
         else if (creatureType == CreatureType.Animal)
         {
-            AP.age = Time.timeSinceLevelLoad - AP.bornTime;
-            CheckElderDeath();
+            //AP.age = Time.timeSinceLevelLoad - AP.bornTime;
+            //CheckElderDeath();
         }
 
         UpdateStatusCanvasAliveCreature();
@@ -90,7 +93,7 @@ public class LivingCreature : MonoBehaviour
     void UpdateStatusCanvasAliveCreature()
     {
         var agetext = ACR.animalStatusController.AgeText;
-        if (agetext != null) agetext.text = ((int)AP.age).ToString() + " : " + AP.ageStage.ToString();
+        if (agetext != null) agetext.text = ((int)AP.ACR.ageController.age).ToString() + " : " + AP.ACR.ageController.ageStage.ToString();
 
     }
 
@@ -125,7 +128,7 @@ public class LivingCreature : MonoBehaviour
             var MC = GetComponent<MatingController>();
             var sex = MC.sex;
 
-            AC.animal.DeathOfAnimal(AP.animalType, this.gameObject, AP.ageStage, causeOfDeath, sex);
+            AC.animal.DeathOfAnimal(AP.animalType, this.gameObject, AP.ACR.ageController.ageStage, causeOfDeath, sex);
 
             //Plants dont have AnimalBehaviorController, plants foodsource stays, but animals food source will be corrected to their hunger level
             //Hunger animal means less nutrients means less foodSource for the predator
@@ -178,23 +181,6 @@ public class LivingCreature : MonoBehaviour
     }
 
 
-    void CheckElderDeath()
-    {
-        if (AP.ageStage == AgeStage.Elder && checkElderDeathAge + checkElderDeathTimer < AP.age)
-        {
-            checkElderDeathAge = AP.age; // resetting last elder death check age time
-            // (elderAgeStart = elderThreshold * avarageLifeTime)
-            // ((460-450) / (600-450))/2 = 10/150 / 2      = 0.03% 
-            // ((600-450) / (600-450))/2 = 150/150 / 2     = 50% (50% to die if age is equal to avarage lifetime)
-            // ((620-450) / (600-450))/2 = 170/150 / 2     = 56.6% (after avarage lifetime deth % is bigger)
-            float deathPercentage = ((AP.age - AP.elderAgeStart) / (AP.avarageLifeTime - AP.elderAgeStart)) / 2f;
-            float random = Random.Range(0.0f, 1.0f);
-            if (random <= deathPercentage)
-            {
-                //animalController.GetComponent<AnimalController>().RemoveAnimalFromList(gameObject);
-                CreatureDied(CauseOfDeath.ageDeath);
-            }
-        }
-    }
+    
 
 }

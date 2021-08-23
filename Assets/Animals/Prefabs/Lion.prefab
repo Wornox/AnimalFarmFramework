@@ -55,6 +55,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -79,6 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1116978791237840
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +136,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -158,6 +161,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1180793719255366
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +217,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -237,6 +242,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1245983906833760
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,6 +298,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -316,6 +323,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1483016456790982
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,6 +379,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -395,6 +404,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1553991042791506
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,11 +418,13 @@ GameObject:
   - component: {fileID: 1232103550688823085}
   - component: {fileID: 6244084918007489963}
   - component: {fileID: 1091743506328951583}
-  - component: {fileID: -2080119338112033996}
   - component: {fileID: 7928333851132405531}
+  - component: {fileID: -2080119338112033996}
   - component: {fileID: -8872272159730193622}
   - component: {fileID: 1244251306546197190}
   - component: {fileID: -275309247601622138}
+  - component: {fileID: 7213385286639111578}
+  - component: {fileID: 1655673371299477251}
   m_Layer: 15
   m_Name: Lion
   m_TagString: Lion
@@ -491,6 +503,9 @@ MonoBehaviour:
   livingCreature: {fileID: -8872272159730193622}
   matingController: {fileID: 1244251306546197190}
   packController: {fileID: -275309247601622138}
+  geneController: {fileID: 7213385286639111578}
+  ageController: {fileID: 1655673371299477251}
+  animalController: {fileID: 0}
 --- !u!114 &1091743506328951583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,64 +520,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   draw_scanner: 0
   enemy: []
---- !u!114 &-2080119338112033996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553991042791506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 613de05fa8c1dcc4ca5270288511540b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ageAttributes:
-  - viewRadius: 23
-    speed: 3.5
-    ageStageUpperPercentage: 15
-    hungerModifier: 1.05
-    thirstModifier: 1.05
-  - viewRadius: 25
-    speed: 3.65
-    ageStageUpperPercentage: 22
-    hungerModifier: 1.17
-    thirstModifier: 1.17
-  - viewRadius: 27
-    speed: 3.85
-    ageStageUpperPercentage: 33
-    hungerModifier: 1.25
-    thirstModifier: 1.25
-  - viewRadius: 29
-    speed: 4.1
-    ageStageUpperPercentage: 50
-    hungerModifier: 1.15
-    thirstModifier: 1.15
-  - viewRadius: 25
-    speed: 3.55
-    ageStageUpperPercentage: 75
-    hungerModifier: 1.05
-    thirstModifier: 1.05
-  - viewRadius: 21
-    speed: 3.3
-    ageStageUpperPercentage: 100
-    hungerModifier: 0.75
-    thirstModifier: 0.75
-  viewRadius: 0
-  speed: 4.2
-  animalType: 2
-  enemyTypes: 06000000
-  foodTypes: 0000000004000000050000000300000001000000
-  waterType: 0
-  age: 0
-  ageStage: 0
-  avarageLifeTime: 1400
-  childBirth: 1
-  hungerThresherhold: 70
-  thirstThresherhold: 70
-  formPack: 0
-  elderAgeStart: 0
-  drawHungerThirstSlider: 1
 --- !u!114 &7928333851132405531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,6 +537,32 @@ MonoBehaviour:
   thirst: 70
   targetPos: {x: 0, y: 0, z: 0}
   directionVector: {x: 0, y: 0, z: 0}
+--- !u!114 &-2080119338112033996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553991042791506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 613de05fa8c1dcc4ca5270288511540b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 0
+  speed: 4.2
+  animalType: 2
+  enemyTypes: 06000000
+  foodTypes: 0000000004000000050000000300000001000000
+  waterType: 0
+  hungerModifier: 0
+  thirstModifier: 0
+  hungerThresherhold: 70
+  thirstThresherhold: 70
+  pregnancyTime: 0
+  formPack: 0
+  ACR: {fileID: 6244084918007489963}
+  drawHungerThirstSlider: 1
 --- !u!114 &-8872272159730193622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -608,6 +591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6a872344d45ed4dbf4b1a80d17aeb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  childBirth: 3
   matingPropertie: {fileID: 0}
   sex: 2
   matingStatus: 0
@@ -632,6 +616,112 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imLeader: 0
   maxPackSize: 6
+--- !u!114 &7213385286639111578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553991042791506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d42887d572279fb41a737fcccafd34b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  geneAttributes:
+    SpeedMutationType: 4
+    SpeedMutationProbability: 1
+    SpeedMutationValueMin: -0.25
+    SpeedMutationValueMax: 0.25
+    DominantSpeed: 0
+    RecessiveSpeed: 0
+    MetabolismMutationType: 4
+    MetabolismMutationProbability: 1
+    MetabolismMutationValueMin: -0.1
+    MetabolismMutationValueMax: 0.1
+    DominantMetabloism: 0
+    RecessiveMetabloism: 0
+    ReproductionRateMutationType: 4
+    ReproductionRateMutationProbability: 1
+    ReproductionRateMutationValueMin: -0.2
+    ReproductionRateMutationValueMax: 0.2
+    DominantReproductionRate: 0
+    RecessiveReproductionRate: 0
+  isGeneHeritanceEnabled: 1
+--- !u!114 &1655673371299477251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553991042791506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac8ef7611c6bd24eae03ec2ea8bc092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ageAttributesList:
+  - ageStage: 0
+    matingCapability: 0
+    viewRadius: 20
+    speed: 3
+    ageStageUpperPercentage: 1
+    agehungerModifier: 1
+    agethirstModifier: 1
+    ageSizeModifier: 0.3
+  - ageStage: 1
+    matingCapability: 0
+    viewRadius: 23
+    speed: 3.55
+    ageStageUpperPercentage: 10
+    agehungerModifier: 1.2
+    agethirstModifier: 1.2
+    ageSizeModifier: 0.5
+  - ageStage: 2
+    matingCapability: 0
+    viewRadius: 25
+    speed: 3.85
+    ageStageUpperPercentage: 22
+    agehungerModifier: 1.3
+    agethirstModifier: 1.3
+    ageSizeModifier: 0.6
+  - ageStage: 3
+    matingCapability: 1
+    viewRadius: 27
+    speed: 4.05
+    ageStageUpperPercentage: 33
+    agehungerModifier: 1.4
+    agethirstModifier: 1.4
+    ageSizeModifier: 0.7
+  - ageStage: 4
+    matingCapability: 1
+    viewRadius: 29
+    speed: 4.2
+    ageStageUpperPercentage: 50
+    agehungerModifier: 1.3
+    agethirstModifier: 1.3
+    ageSizeModifier: 1
+  - ageStage: 5
+    matingCapability: 1
+    viewRadius: 25
+    speed: 3.7
+    ageStageUpperPercentage: 75
+    agehungerModifier: 1.1
+    agethirstModifier: 1.1
+    ageSizeModifier: 0.9
+  - ageStage: 6
+    matingCapability: 1
+    viewRadius: 21
+    speed: 3.2
+    ageStageUpperPercentage: 100
+    agehungerModifier: 0.7
+    agethirstModifier: 0.7
+    ageSizeModifier: 0.8
+  age: 0
+  ageStage: 0
+  avarageLifeTime: 1300
+  elderAgeStart: 0
+  ACR: {fileID: 6244084918007489963}
 --- !u!1 &1559099344501894
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,6 +777,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -711,6 +802,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1683071715210648
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,6 +858,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -790,6 +883,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &532849431919422432
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,6 +1004,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1029,6 +1124,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
         type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 33.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 44.0553
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1041,6 +1181,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
         type: 3}
@@ -1059,13 +1204,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
         type: 3}
-      propertyPath: m_RootOrder
-      value: 1
+      propertyPath: m_AnchoredPosition.y
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
         type: 3}
@@ -1081,56 +1226,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 33.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 44.0553
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
-        type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237177796767453069, guid: 90eb61bbf141d6c408658c40ceab9770,
-        type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8171827357158350967, guid: 90eb61bbf141d6c408658c40ceab9770,
         type: 3}

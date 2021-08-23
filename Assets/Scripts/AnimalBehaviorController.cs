@@ -2,16 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
-using Unity.Profiling;
-using Unity.Jobs;
 
 public class AnimalBehaviorController : MonoBehaviour
 {
-    AnimalComponentReferences ACR;
-    AnimalProperties AP;
-    AnimalStatusController ASC;
-
     public Phase phase;
 
     [Range(0, 100)]
@@ -20,79 +13,61 @@ public class AnimalBehaviorController : MonoBehaviour
     [Range(0, 100)]
     public float thirst;
 
-    private bool godSetDestination;
-
-    private Camera cam;
-
-    private Scanner scanner;
-
-    private NavMeshAgent agent;
-
-    public Vector3 targetPos;
-
-    private Animator anim;
-
-    private AnimalProperties prop;
-
-    private MatingController MC;
-
     List<Vector3> enemys;
     List<Vector3> foods;
     List<GameObject> waters;
     List<GameObject> allies;
 
+    public Vector3 targetPos;
     Vector3 fleeVec = Vector3.zero;
-
-    Vector3 oldPos;
-
     public Vector3 directionVector;
-
     GameObject foodTarget;
-
     Vector3 waterTargetPos;
 
-    //LineRenderer lRend;
+    //Technical
+    AnimalComponentReferences ACR;
+    MatingController MC;
+    AnimalProperties AP;
+    AnimalStatusController ASC;
+    LivingCreature LCSelf;
 
-    private float reacheckedForNewTarget;
-
-    private LivingCreature lcSelf;
+    Animator anim;
+    NavMeshAgent agent;
+    Scanner scanner;
 
     void Awake()
     {
         ACR = GetComponent<AnimalComponentReferences>();
-        AP = GetComponent<AnimalProperties>();
+        AP = ACR.animalProperties;
         anim = ACR.animalMeshController.animator;
-        agent = GetComponent<NavMeshAgent>();
-        MC = GetComponent<MatingController>();
-        lcSelf = GetComponent<LivingCreature>();
+        MC = ACR.matingController;
+        LCSelf = ACR.livingCreature;
         ASC = ACR.animalStatusController;
 
+        agent = GetComponent<NavMeshAgent>();
         agent.Warp(transform.position);
-        cam = Camera.main;
-        scanner = GetComponent<Scanner>();
-
+        scanner = ACR.scanner;
     }
 
-    void Start()
+    void Update()
     {
-        oldPos = transform.position;
+        float deltaTime = Time.deltaTime;
+        UpdateAnimal(deltaTime);
     }
 
-    static ProfilerMarker s_PreparePerfMarker = new ProfilerMarker("MySystem.Prepare");
-
-    public void Update()
+    void UpdateAnimal(float deltaTime)
     {
+        AP.RefreshAttributes(deltaTime);
         agent.speed = AP.speed;
         Logic();
         PhaseExecute();
 
-        hunger -= Time.deltaTime * 0.05f * AP.hungerModifier;
-        thirst -= Time.deltaTime * 0.05f * AP.thirstModifier;
+        hunger -= deltaTime * 0.05f * AP.hungerModifier;
+        thirst -= deltaTime * 0.05f * AP.thirstModifier;
 
         CheckHungerThirst();
 
         if (GetComponent<LivingCreature>().alive) UpdateStatusCanvas();
-
     }
 
     void UpdateStatusCanvas()
@@ -120,9 +95,15 @@ public class AnimalBehaviorController : MonoBehaviour
 
             if (dis < closestDistance && condition)
             {
-                closest = o.gameObject;
-                closestDistance = dis;
-                found = true;
+                //NavMeshPath path = new NavMeshPath();
+                //agent.CalculatePath(o.gameObject.transform.position, path);
+                ////only consider closest if it can be reached
+                //if(path.status == NavMeshPathStatus.Path)
+                //{
+                    closest = o.gameObject;
+                    closestDistance = dis;
+                    found = true;
+                //}
             }
         }
         return (closest, closestDistance, found);
@@ -178,17 +159,20 @@ public class AnimalBehaviorController : MonoBehaviour
         // *** if already chasing(eating) enemy ***
         if (phase == Phase.Eating)
         {
-            if (foodTarget == null || !agent.hasPath)
+            if (foodTarget != null)
             {
-                //lost target or unreachable -> back to exploring
-                foodTarget = null;
-                phase = Phase.Exploring;
-                SetNewRandomTargetPos();
-                return;  //-> PhaseExecute
-            }
-            else
+                agent.SetDestination(foodTarget.transform.position);
+
+                if (!agent.hasPath)
+                {
+                    //lost target or unreachable -> back to exploring
+                    foodTarget = null;
+                    phase = Phase.Exploring;
+                    SetNewRandomTargetPos();
+                    return;  //-> PhaseExecute
+                }
+            } else
             {
-                //1 second has passed since scanning, scan for new target
                 string[] foodMask = new string[AP.foodTypes.Count];
                 for (int i = 0; i < AP.foodTypes.Count; i++)
                 {
@@ -203,15 +187,14 @@ public class AnimalBehaviorController : MonoBehaviour
                     targetPos = closestFood.transform.position;
                     foodTarget = closestFood;
                     agent.SetDestination(targetPos);
-                }
-                else
+                } else
                 {
-                    //no closer animal -> continuting hunting original one
-                    targetPos = foodTarget.transform.position;
-                    agent.SetDestination(targetPos);
+                    phase = Phase.Exploring;
+                    SetNewRandomTargetPos();
                 }
-                return; //-> PhaseExecute
             }
+            return; //-> PhaseExecute
+            
 
         }
 
@@ -269,6 +252,8 @@ public class AnimalBehaviorController : MonoBehaviour
                     waterTargetPos = borderPoint;
                     targetPos = borderPoint;
                     agent.SetDestination(targetPos);
+                    waterTargetPos = agent.pathEndPosition;
+                    targetPos = agent.pathEndPosition;
                     return; //PhaseExecute
                 }
                 else
@@ -491,12 +476,12 @@ public class AnimalBehaviorController : MonoBehaviour
     {
         if (hunger < 0.1f)
         {
-            lcSelf.CreatureDied(CauseOfDeath.hungerDeath);
+            LCSelf.CreatureDied(CauseOfDeath.hungerDeath);
         }
 
         if (thirst < 0.1f)
         {
-            lcSelf.CreatureDied(CauseOfDeath.thirstDeath);
+            LCSelf.CreatureDied(CauseOfDeath.thirstDeath);
         }
     }
 

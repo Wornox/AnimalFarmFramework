@@ -4,11 +4,29 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-enum Command { help, start, stop, restart, add, spawn, speed, clear, stats, statsAll, grass, range, grainMax, grainSpawnSpeed, grainRegenRate, drawHTSlider };
+enum Command { help, start, stop, restart, add, spawn, speed, clear, stats, statsAll, grass, range, grainMax, grainSpawnSpeed, grainRegenRate, drawHTSlider, set };
 
 public class InputController : MonoBehaviour
 {
-
+    static Dictionary<Command, string> commandDescriptions = new Dictionary<Command, string> {
+        {Command.help, "List all help commands"},
+        {Command.start, "Stats the simualtion, entities (animals and vegetation) and time starts to move"},
+        {Command.stop, "Stops the simualtion, entities (animals and vegetation) and time are frozen"},
+        {Command.restart, "Restarts the simualtion, all entities (animals and vegetation) and statistics are deleted from the map"},
+        {Command.add, "Add animals to the simulation, additional parameters required: \n usage: add <animaltype> <number> <location> \n example: add chicken 200 random \n note: <animalType> must be one of {Chicken, Dog, Fox, Cow, Pig, Lion}, <number> must be positive integer, <location> be one of {random} options"},
+        {Command.spawn, "Add vegetations to the simulation, additional parameters required: \n usage: spawn <vegetationtype> <number> <location> \n example: spawn grain 180 random \n note: <vegetationType> must be 'grain', <number> must be positive integer, <location> must be 'random'"},
+        {Command.speed, "Set the speed of the simulation, default value is 1: \n usage: speed <value> \n example: speed 2 \n note: <value> must be within the range of 0.1 and 3"},
+        {Command.clear, "Clear the command window"},
+        {Command.stats, "Writes the statistics on the command window"},
+        {Command.statsAll, "Writes detailed statistics on the command window"},
+        {Command.grass, "Graphical setting, turn on/off grass \n usage: grass <1/0>"},
+        {Command.range, "Graphical setting, turn on/off animal viewrange for perfomance, default is turned off \n usage: range <1/0>"},
+        {Command.grainMax, "Vegetation setting, set vegetation limit in the simualtion \n usage: grainMax <value>"},
+        {Command.grainSpawnSpeed, "Vegetation setting, set vegetation spawn speed in the simualtion \n usage: grainSpawnSpeed <value>"},
+        {Command.grainRegenRate, "Vegetation setting, set vegetation regen rate in the simualtion \n usage: grainRegenRate <value>"},
+        {Command.drawHTSlider, "Graphical setting, turn on/off hunger and thirst bars in animal info (above head) for performance, default is turned on \n usage: drawHTSlider <1/0>"},
+        {Command.set, "Animal setting, set animals parameter in the simualtion \n usage: set <animaltype> <attributename> <value>, \n example: set chicken pregnancyTime 60 \n note: <animalType> must be one of {Chicken, Dog, Fox, Cow, Pig, Lion} options, <attributename> must be one of {pregnancyTime} options, <value> must be positive integer"},
+    };
     public Canvas Overlay;
     public GameObject MainCamera;
     public GameObject AnimalController;
@@ -27,20 +45,27 @@ public class InputController : MonoBehaviour
     public bool ConsoleMode;
     public bool drawHTsliders = true;
 
+    bool objectAwakened = false;
+
     // Start is called before the first frame update
     void Awake()
     {
+        if (!objectAwakened)
+        {
+            objectAwakened = true;
 
-        CameraRotation = MainCamera.GetComponent<CameraRotation>();
-        CameraMovement = MainCamera.GetComponent<CameraMovement>();
+            CameraRotation = MainCamera.GetComponent<CameraRotation>();
+            CameraMovement = MainCamera.GetComponent<CameraMovement>();
 
-        CommandPrompt = GameObject.Find("CommandPrompt");
-        CommandInput = GameObject.Find("CommandInput");
-        CommandsLogTextContent = GameObject.Find("CommandsLogTextContent");
-        terrainSet = TerrainController.currentTerrainSetInstance;
-        CommandPrompt.SetActive(false);
+            CommandPrompt = GameObject.Find("CommandPrompt");
+            CommandInput = GameObject.Find("CommandInput");
+            CommandsLogTextContent = GameObject.Find("CommandsLogTextContent");
+            terrainSet = TerrainController.currentTerrainSetInstance;
+            CommandPrompt.SetActive(false);
+        }
 
     }
+
 
     // Update is called once per frame
     void Update()
@@ -98,8 +123,15 @@ public class InputController : MonoBehaviour
         }
     }
 
+    public void WriteToOwnConsole(string s)
+    {
+        if (!objectAwakened) Awake();
+        AddStringToLog(s);
+    }
+
     public void InterpretCommand(string command)
     {
+        if (!objectAwakened) Awake();
         string[] parts = command.Split(' ');
 
         Command mainPart;
@@ -186,6 +218,11 @@ public class InputController : MonoBehaviour
                     AnimalController.GetComponent<AnimalController>().drawHTSlider = draw_slider;
                     VegetableSpawner.GetComponent<VegetableSpawner>().drawHTSlider = draw_slider;
                     break;
+                case Command.set:
+                    bool setValid = SetCommand(parts[1], parts[2], parts[3]);
+                    if (setValid) AddStringToLog("Successfull set:" + System.Environment.NewLine + parts[1] + " " + parts[2] + " " + parts[3]);
+                    else AddStringToLog("Failed adding:" + System.Environment.NewLine + parts[1] + " " + parts[2] + " " + parts[3]);
+                    break;
                 default:
                     AddStringToLog("Unknown command please try 'help' command.");
                     break;
@@ -208,11 +245,18 @@ public class InputController : MonoBehaviour
 
     string CollectCommands()
     {
-        string s = "Avalible commands:";
+        string s = "Avalible commands in the current version:";
         foreach(Command c in (Command[]) System.Enum.GetValues(typeof(Command)))
         {
-            s += System.Environment.NewLine + "- " + c.ToString();
+            commandDescriptions.TryGetValue(c, out string description);
+            s += System.Environment.NewLine + "- " + c.ToString() + description;
         }
         return s;
+    }
+
+    bool SetCommand(string animalTypeString, string parameter, string value)
+    {
+        bool validCommand = AnimalController.GetComponent<AnimalController>().SetParameter(animalTypeString, parameter, value);
+        return validCommand;
     }
 }

@@ -241,8 +241,9 @@ public class Animal
 
         public void AddAnimal(GameObject reference)
         {
-            AAD.NewAnimal(reference.GetComponent<AnimalProperties>().ageStage);
-            ASD.NewAnimal(reference.GetComponent<MatingController>().sex);
+            var ACR = reference.GetComponent<AnimalComponentReferences>();
+            AAD.NewAnimal(ACR.ageController.ageStage);
+            ASD.NewAnimal(ACR.matingController.sex);
         }
 
         public void AgeStageModified(AgeStage from, AgeStage to)
@@ -459,6 +460,11 @@ public class Animal
 
 }
 
+public struct CommandValues
+{
+    public Dictionary<AnimalType,float> pregnancyTime;
+};
+
 public class AnimalController : MonoBehaviour
 {
     public List<GameObject> animalPrefabList;
@@ -468,13 +474,29 @@ public class AnimalController : MonoBehaviour
     public bool drawHTSlider = true;
     public bool drawHTValue = false;
 
+    bool objectAwakened = false;
+
+    CommandValues commandValues;
+
     void Awake()
     {
-        createAnimalClass();
-        animalReferences = new List<(GameObject, AnimalComponentReferences)>();
+        if (!objectAwakened)
+        {
+            objectAwakened = true;
+            CreateAnimalClass();
+            animalReferences = new List<(GameObject, AnimalComponentReferences)>();
+            commandValues = new CommandValues();
+            commandValues.pregnancyTime = new Dictionary<AnimalType, float>();
+        }
     }
 
-    void createAnimalClass()
+    public Animal GetAnimalClass()
+    {
+        if (!objectAwakened) Awake();
+        return animal;
+    }
+
+    void CreateAnimalClass()
     {
         animal = new Animal();
         animal.CreateExporter(this);
@@ -488,7 +510,7 @@ public class AnimalController : MonoBehaviour
     {
         if (animal == null)
         {
-            createAnimalClass();
+            CreateAnimalClass();
         }
     }
 
@@ -509,8 +531,13 @@ public class AnimalController : MonoBehaviour
 
         PackNames.Restart();
 
-        GetComponent<CSVExporter>().closeSCVFiles();
-        GetComponent<CSVExporter>().GenerateNewAnimalCSVFiles();
+        var CSVExporter = GetComponent<CSVExporter>();
+
+        CSVExporter.closeSCVFiles();
+        CSVExporter.GenerateNewAnimalCSVFiles();
+
+        CSVExporter.closeGenerationSCVFiles();
+        CSVExporter.GenerateNewAnimalGenerationCSVFiles();
     }
 
     public (bool, string) AddAnimal(string animalTypeString, string animalCountString, string spawnPos)
@@ -525,6 +552,13 @@ public class AnimalController : MonoBehaviour
 
         GameObject prefab = GetPrefabByAnimalType(animalType);
 
+        //Change default prefab parameters with command defined values
+        if (commandValues.pregnancyTime.ContainsKey(animalType))
+        {
+            prefab.GetComponent<MatingController>().pregnancyTime = commandValues.pregnancyTime[animalType];
+        }
+
+
         if (prefab != null)
         {
             SpawnAnimal(prefab, animalType, animalCount, sp, out returnS);
@@ -536,6 +570,33 @@ public class AnimalController : MonoBehaviour
         }
 
         return (returnB, returnS);
+    }
+
+    public bool SetParameter(string animalTypeString, string parameter, string value)
+    {
+        bool validCommand = true;
+
+        AnimalType animalType;
+        if (!System.Enum.TryParse(animalTypeString, true, out animalType)) validCommand = false;
+
+        float parameterValue;
+        if (!float.TryParse(value, out parameterValue)) validCommand = false;
+
+        if (parameter == "pregnancyTime")
+        {
+            if (commandValues.pregnancyTime.ContainsKey(animalType))
+            {
+                commandValues.pregnancyTime[animalType] = parameterValue;
+            } else
+            {
+                commandValues.pregnancyTime.Add(animalType, parameterValue);
+            }
+        } else
+        {
+            validCommand = false;
+        }
+
+        return validCommand;
     }
 
     void SpawnAnimal(GameObject animalPrefab, AnimalType animalType, int count, SpawnPosition sp, out string returnS)
@@ -569,6 +630,8 @@ public class AnimalController : MonoBehaviour
             animalReferences.Add((animalRef, animalACR));
             animalACR.animalProperties.drawHungerThirstSlider = drawHTSlider;
             animalACR.animalStatusController.EnableHungerThirstSlider(animalACR.animalProperties.drawHungerThirstSlider);
+
+            animalACR.geneController.GenerateDummyGene();
         }
         returnS = count + " " + animalPrefab.name.ToString() + "(s) were added to the simulation.";
     }
@@ -625,4 +688,6 @@ public class AnimalController : MonoBehaviour
     {
         animal.SetDrawRange(draw);
     }
+
+    
 }

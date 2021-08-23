@@ -8,6 +8,8 @@ public class MatingController : MonoBehaviour
     AnimalComponentReferences ACR;
     AnimalProperties AP;
 
+    public int childBirth;
+
     public MatingPropertie matingPropertie;
 
     private Scanner scanner;
@@ -39,6 +41,8 @@ public class MatingController : MonoBehaviour
     public float startMatingHungerLowTreshold;
     public float startMatingThirstLowTreshold;
 
+    private GeneStructure matingPartnersGeneStructure; //the mother saves the fater's GS at conception
+
     private void Awake()
     {
         ACR = GetComponent<AnimalComponentReferences>();
@@ -60,11 +64,6 @@ public class MatingController : MonoBehaviour
         matingDistance = 1.5f;
     }
 
-    void Start()
-    {
-
-    }
-
     public void Update()
     {
         ScanForMatingPartner();
@@ -74,7 +73,7 @@ public class MatingController : MonoBehaviour
 
     void ScanForMatingPartner()
     {
-        if (AP.ageStage == AgeStage.Puppy) return; //puppies cant mate
+        if (ACR.ageController.ageStage == AgeStage.Puppy) return; //puppies cant mate
 
         if (matingPartner != null) return; // if mating partner alredy selected then no need to scan
 
@@ -224,6 +223,7 @@ public class MatingController : MonoBehaviour
                 if (!PregnancyFlag)
                 {
                     PregnancyFlag = true;
+
                     StartCoroutine(Pregnancy());
                 }
             }
@@ -247,12 +247,29 @@ public class MatingController : MonoBehaviour
         // suspend execution for matingTime
         yield return new WaitForSeconds(matingTime);
 
-        //change status after mating
-        if (sex == Sex.female) matingStatus = MatingStatus.pregnant;
-        else matingStatus = MatingStatus.inactive;
+        //Save father gene attributes
+        if (matingPartner != null)
+        {
+            AnimalComponentReferences fatherACR = matingPartner.GetComponent<AnimalComponentReferences>();
+            if (fatherACR != null)
+            {
+                matingPartnersGeneStructure = fatherACR.geneController.geneStructure;
 
-        //re-enable movement
-        //abc.ToggleMovement(true);
+                //change status after mating
+                if (sex == Sex.female) matingStatus = MatingStatus.pregnant;
+                else matingStatus = MatingStatus.inactive;
+            }
+            else
+            {
+                int a = 4;
+                //Mating was aborted
+            }
+        }
+        else
+        {
+            int b = 5;
+            //Mating was aborted
+        }
 
         //if mating duration expires countinue exploring state
         abc.MatingDone();
@@ -261,10 +278,8 @@ public class MatingController : MonoBehaviour
 
     IEnumerator Pregnancy()
     {
-        // suspend execution for 5 seconds
-        yield return new WaitForSeconds(pregnancyTime);
+        yield return new WaitForSeconds(ACR.animalProperties.pregnancyTime);
 
-        //TODO: child randomization
         SpawnChildren();
 
         //change status after pregnancy
@@ -272,6 +287,7 @@ public class MatingController : MonoBehaviour
 
         //can choose new mating partner
         matingPartner = null;
+        matingPartnersGeneStructure = null;
 
         PregnancyFlag = false;
     }
@@ -281,19 +297,35 @@ public class MatingController : MonoBehaviour
         //Getting prefab reference form AnimalContoller
         GameObject prefab = ac.GetPrefabByAnimalType(AP.animalType);
 
-        for (int i = 0; i < AP.childBirth; i++)
+        for (int i = 0; i < childBirth; i++)
         {
-            //Spawning ONE new animal per cycle
+            //Spawning ONE new animal child per cycle loop
             GameObject child = Instantiate(prefab, transform.position, Quaternion.identity);
             AnimalComponentReferences childACR = child.GetComponent<AnimalComponentReferences>();
 
+            //----Default----
             childACR.matingController.matingStatus = MatingStatus.unMature;
-            childACR.animalProperties.ageStage = AgeStage.NewBorn;
+            childACR.ageController.ageStage = AgeStage.NewBorn;
             childACR.animalBehaviorController.hunger = 25;
             childACR.animalBehaviorController.thirst = 25;
             childACR.matingController.parents.Add(this.gameObject); //add mother
             childACR.matingController.parents.Add(matingPartner); // add father
             childACR.animalStatusController.EnableHungerThirstSlider(AP.drawHungerThirstSlider);
+
+            //----Gene----
+            if (ACR.geneController.isGeneHeritanceEnabled) // only applying if gene inheritance function is enabled
+            {
+                childACR.geneController.Inherit(matingPartnersGeneStructure, this.ACR.geneController.geneStructure);
+                childACR.geneController.Mutate();
+                //childACR.animalProperties.ApplyGeneAttributes();
+
+                childACR.animalProperties.RefreshAttributes(Time.deltaTime);
+
+                //Statistics export
+                var CSVExporter = ac.GetComponent<CSVExporter>();
+                CSVExporter.UpdateGenerationCSV(childACR.animalProperties.animalType, childACR.geneController, childACR.animalProperties);
+            }
+
 
             //----Pack----
             if (ACR.packController != null) //cheking if self animaltype capable of forming packs
@@ -318,6 +350,24 @@ public class MatingController : MonoBehaviour
             abc.hunger -= 5;
             abc.thirst -= 5;
             abc.CheckHungerThirst(); //checking hunger/thirst death during labor
+        }
+    }
+
+    public void SetMatingStatus(int matingStatus, AgeStage ageStage)
+    {
+        if(matingStatus == 1 && this.matingStatus == MatingStatus.unMature)
+        {
+            this.matingStatus = MatingStatus.readyToMate;
+        }
+        if(matingStatus == 0)
+        {
+            if(ageStage == AgeStage.Elder)
+            {
+                this.matingStatus = MatingStatus.tooOld;
+            } else
+            {
+                this.matingStatus = MatingStatus.unMature;
+            }
         }
     }
 
