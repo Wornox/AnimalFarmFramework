@@ -1,0 +1,5 @@
+sajnos leállítottam a szimulációt viszonylag hamar, de az a furcsa, hogy a növényzet elérte a 200-at ami egy beállított maximum volt, azért nem nõtt tovább, és a tehénnek nem volt ellensége mégis folyamatosan csökkent a számuk, beállított tulajdonságok: lassú, 1 gyereket hoz világra, sokáig tart a terhesség
+thirstDeath 	28
+hungerDeath 	91
+ageDeath 		232
+predatorDeath	9

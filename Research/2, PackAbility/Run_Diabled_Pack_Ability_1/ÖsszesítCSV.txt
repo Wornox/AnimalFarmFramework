@@ -1,0 +1,64 @@
+Sub MergeCSVs()
+Dim intChoice As Integer
+Dim strPath As String
+Dim i As Integer
+
+'allow the user to select multiple files and restrict view to csv by default
+Call Application.FileDialog(msoFileDialogOpen).Filters.Clear
+Call Application.FileDialog(msoFileDialogOpen).Filters.Add( _
+"CSV Files Only", "*.csv")
+Call Application.FileDialog(msoFileDialogOpen).Filters.Add( _
+"All Files", "*.*")
+Application.FileDialog(msoFileDialogOpen).AllowMultiSelect = True
+
+'make the file dialog visible to the user
+intChoice = Application.FileDialog(msoFileDialogOpen).Show
+
+'determine what choice the user made
+If intChoice <> 0 Then
+'get the file paths selected by the user
+For i = 1 To Application.FileDialog(msoFileDialogOpen _
+).SelectedItems.Count
+strPath = Application.FileDialog(msoFileDialogOpen _
+).SelectedItems(i)
+
+'obtain the filename without the folder path
+strFileName = Right(strPath, Len(strPath) - InStrRev(strPath, "\"))
+
+'create new sheet with the correct name
+newsheetname = Left(strFileName, Len(strFileName) - 4)
+
+'import data from csv
+Sheets.Add.Name = newsheetname
+With ActiveSheet.QueryTables.Add(Connection:= _
+"TEXT;" & strPath _
+, Destination:=Range("$A$1"))
+.Name = newsheetname
+.FieldNames = True
+.RowNumbers = False
+.FillAdjacentFormulas = False
+.PreserveFormatting = True
+.RefreshOnFileOpen = False
+.RefreshStyle = xlInsertDeleteCells
+.SavePassword = False
+.SaveData = True
+.AdjustColumnWidth = True
+.RefreshPeriod = 0
+.TextFilePromptOnRefresh = False
+.TextFilePlatform = 850
+.TextFileStartRow = 1
+.TextFileParseType = xlDelimited
+.TextFileTextQualifier = xlTextQualifierDoubleQuote
+.TextFileConsecutiveDelimiter = False
+.TextFileTabDelimiter = True
+.TextFileSemicolonDelimiter = False
+.TextFileCommaDelimiter = True
+.TextFileSpaceDelimiter = False
+.TextFileColumnDataTypes = Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+.TextFileTrailingMinusNumbers = True
+.Refresh BackgroundQuery:=False
+End With
+Next i
+
+End If
+End Sub

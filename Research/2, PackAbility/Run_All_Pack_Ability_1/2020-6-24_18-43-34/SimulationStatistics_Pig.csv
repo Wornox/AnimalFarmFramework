@@ -1,0 +1,9 @@
+System Time:,Simulation Time:,AnimalType:,overall,alive,puppy,juvenile,young_adult,adult,aged_adult,elder,overall_puppy,overall_juvenile,overall_young_adult,overall_adult,overall_aged_adult,overall_elder,female,male,overall_female,overall_male,thirstDeath,hungerDeath,ageDeath,predatorDeath
+18:43:35,1.20023,Pig,6,6,6,0,0,0,0,0,6,0,0,0,0,0,4,2,4,2,0,0,0,0,
+18:44:13,76.14355,Pig,6,6,0,6,0,0,0,0,6,6,0,0,0,0,4,2,4,2,0,0,0,0,
+18:44:31,111.0897,Pig,6,6,0,0,6,0,0,0,6,6,6,0,0,0,4,2,4,2,0,0,0,0,
+18:44:31,112.5866,Pig,6,5,0,0,5,0,0,0,6,6,6,0,0,0,3,2,4,2,0,0,0,1,
+18:44:42,133.871,Pig,6,4,0,0,4,0,0,0,6,6,6,0,0,0,2,2,4,2,0,0,0,2,
+18:44:43,136.1812,Pig,6,3,0,0,3,0,0,0,6,6,6,0,0,0,1,2,4,2,0,0,0,3,
+18:44:58,166.0842,Pig,6,3,0,0,0,3,0,0,6,6,6,3,0,0,1,2,4,2,0,0,0,3,
+18:45:15,200.2445,Pig,6,0,0,0,0,0,0,0,6,6,6,3,0,0,0,0,4,2,3,0,0,3,

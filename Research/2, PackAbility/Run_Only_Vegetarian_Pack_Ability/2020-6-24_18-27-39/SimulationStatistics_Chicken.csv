@@ -1,0 +1,11 @@
+System Time:,Simulation Time:,AnimalType:,overall,alive,puppy,juvenile,young_adult,adult,aged_adult,elder,overall_puppy,overall_juvenile,overall_young_adult,overall_adult,overall_aged_adult,overall_elder,female,male,overall_female,overall_male,thirstDeath,hungerDeath,ageDeath,predatorDeath
+18:27:41,1.202717,Chicken,6,6,6,0,0,0,0,0,6,0,0,0,0,0,2,4,2,4,0,0,0,0,
+18:28:1,41.11068,Chicken,6,6,0,6,0,0,0,0,6,6,0,0,0,0,2,4,2,4,0,0,0,0,
+18:28:21,81.08236,Chicken,6,6,0,0,6,0,0,0,6,6,6,0,0,0,2,4,2,4,0,0,0,0,
+18:28:41,121.1129,Chicken,6,6,0,0,0,6,0,0,6,6,6,6,0,0,2,4,2,4,0,0,0,0,
+18:28:47,132.396,Chicken,6,5,0,0,0,5,0,0,6,6,6,6,0,0,1,4,2,4,0,0,0,1,
+18:29:6,170.3844,Chicken,6,3,0,0,0,3,0,0,6,6,6,6,0,0,0,3,2,4,2,0,0,1,
+18:29:13,184.7814,Chicken,6,2,0,0,0,2,0,0,6,6,6,6,0,0,0,2,2,4,2,0,0,2,
+18:29:21,201.1597,Chicken,6,2,0,0,0,0,2,0,6,6,6,6,2,0,0,2,2,4,2,0,0,2,
+18:30:11,301.0977,Chicken,6,2,0,0,0,0,0,2,6,6,6,6,2,2,0,2,2,4,2,0,0,2,
+18:30:11,302.041,Chicken,6,0,0,0,0,0,0,0,6,6,6,6,2,2,0,0,2,4,2,0,2,2,

@@ -1,0 +1,27 @@
+Szineket felsorolni
+---------------
+1 Chicken wave
+csak a csirke magában a növényzettel a gyors szaporulat miatt hullámzik
+
+
+-------------
+2 Fox Vs Chicken, changing grain
+a csirkék gyorsan szaporodnak ezért a vannak ilyen hirtelen növekedések, utána meg a rókák száma nõ meg, akik leviszik a csirkék számát, az alacsony csirkeszám miatt meg nõ a növényzet, és amikor lemegy a rókák száma akkor megint feltörnek a csirkék
+
+--------------
+3 Fox vs pig unbalanced
+itt a malacok jó sokan voltak, utána megnõttek a rókák száma és kiírtották az összes malacot
+
+
+------------
+4 - 5  Fox Vs Pig balanced
+a malac nem annyira szapora mint a csirke, így a malac-növény grafikon nem leng ki annyira, de sajnos a rókák elszaporodtak és kiírtották a malacokat
+
+
+-----------
+6, Cow, no chance to survive
+sajnos leállítottam a szimulációt viszonylag hamar, de az a furcsa, hogy a növényzet elérte a 200-at ami egy beállított maximum volt, azért nem nõtt tovább, és a tehénnek nem volt ellensége mégis folyamatosan csökkent a számuk, beállított tulajdonságok: lassú, 1 gyereket hoz világra, sokáig tart a terhesség
+thirstDeath 	28
+hungerDeath 	91
+ageDeath 		232
+predatorDeath	9
