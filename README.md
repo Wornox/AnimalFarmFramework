@@ -7,11 +7,16 @@ Gábor Pusztai
 
 ## Articles about this framework
 
-Planned: 2021. Q4.
+Planned: 2022. Q2.
 
-A novel 3D simulation for closed ecological systems usingsimplified evolution
+Animal Farm Evo - a closed ecological system for simplified evolution showcases
 
-This article introduces a gene evolution approach by extending the predator-prey model. The main goal is to show that in a simulational ecosystem environment the natural selection process can aid the animals to adapt, thus help slightly stabilize unbalanced parameters of a simulation. These unbalanced parameters are the animals' attributes, and by changing from predetermined parameters, animals can inherit and mutate generational traits (genes), resulting in unique individuals in the system. This means some individuals have traits better suited to the current environment and the current situation than others. During the simulation the less suitable animals are more likely will decease, while the more fit individuals have better chances of surviving. Natural selection occurs as a result of this consequence, and the creatures who survive the longest have more opportunities to reproduce. When fitter animals reproduce, their offspring are more likely to receive similarly good gene values to the prior fit scenario, although their qualities are altered during the reproduction's mutation process. When the situation changes and other qualities' values become more significant in the next generation, descendants whose gene values have mutated in the proper direction dictated by the new scenario will be identified as the new fitter animals, and the natural selection cycle will restart.
+This article introduces a gene evolution approach in an extended predator-prey model. In our 3D simulated framework (Animal Farm) we have developed a few fundamental animal behaviors and mechanics to create and manage closed ecosystem environments, while gathering data. Aside from the scientific advantages in research, computer-simulations can also be utilized for presentation, teaching, and entertainment. With the new evolution approach, we suggests the possibility that in a simulational ecosystem environment the natural selection process can aid the animals to adapt, by slightly stabilizing preset parameters of the animals in the simulation. During the simulation the less suitable animals are more likely will decease, while the more fit individuals have better chances of surviving and inheriting their gene structure. The descendants, whose gene values had mutated in the proper direction indicated by the new scenario will be identified as the new fitter animals, and the natural selection cycle will restart. In the paper, we introduce the topic of ecosystem simulations and connected biological works. We also describe why and how we enhanced the predator-prey model with evolutional approaches and show a possible implementation of the system. We present a demonstrational run and analyze possible effects on the animals using the developed system. Also, we discuss potential areas of use, such as animated ecological showcases for students, and propose improvements to our and suggestions to other future evolutional models.
+
+![Image](/Published articles/Evo/Images/Dom_Rec_Inheritance.png)
+
+---
+
 
 Published: 2021. June.
 
