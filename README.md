@@ -11,9 +11,9 @@ Department of Information Systems, ELTE Eötvös Loránd University, Budapest 11
 
 **Planned: 2022. Q2.**
 
-**Animal Farm Evo - a closed ecological system for simplified evolution showcases**
+**Using the Unity game engine to develop 3D simulated ecologicalsystem based on a predator-prey model extended by geneevolution**
 
-This article introduces a gene evolution approach in an extended predator-prey model. In our 3D simulated framework (Animal Farm) we have developed a few fundamental animal behaviors and mechanics to create and manage closed ecosystem environments, while gathering data. Aside from the scientific advantages in research, computer-simulations can also be utilized for presentation, teaching, and entertainment. With the new evolution approach, we suggests the possibility that in a simulational ecosystem environment the natural selection process can aid the animals to adapt, by slightly stabilizing preset parameters of the animals in the simulation. During the simulation the less suitable animals are more likely will decease, while the more fit individuals have better chances of surviving and inheriting their gene structure. The descendants, whose gene values had mutated in the proper direction indicated by the new scenario will be identified as the new fitter animals, and the natural selection cycle will restart. In the paper, we introduce the topic of ecosystem simulations and connected biological works. We also describe why and how we enhanced the predator-prey model with evolutional approaches and show a possible implementation of the system. We present a demonstrational run and analyze possible effects on the animals using the developed system. Also, we discuss potential areas of use, such as animated ecological showcases for students, and propose improvements to our and suggestions to other future evolutional models.
+In the paper, we present a novel implementation of an ecosystem simulation. In our previous work, we implemented a 3D environment based on a predator-prey model, but we found that in most cases, regardless of the choice of starting parameters, the simulation quickly led to extinctions. We wanted to achieve system stabilization, long-term operation, and better simulation of reality by incorporating genetic evolution. Therefore we apply the predator-prey model with evolutional approach. Using Unity game engine we create and manage a 3D closed ecosystem environment defined by an artificial or real uploaded map. We present some demonstrational runs, while gathering data, observe interesting events (such as extinction, sustainability, behavior of swarms) and analyze possible effects on the initial parameters of the system. We found that incorporating genetic evolution into the simulation slightly stabilizes the system, reducing the likelihood of extinction of different types of objects. The simulation of ecosystems and the analysis of the data generated during the simulations can also be a starting point for further research, especially in relation to sustainability. Our system is publicly available, so anyone can customize and upload their own parameters, maps, objects, biological species and their inheritance and behavioral habits, so they can test their own hypotheses from the data generated during its operation. Another utilization of the system is education, students can learn in a playful and spectacular way how the ecosystem behaves, how natural selection helps the adaptability and survival of species, what effects overpopulation and competition can have.
 
 <table border="0">
   <tr>
@@ -27,9 +27,9 @@ This article introduces a gene evolution approach in an extended predator-prey m
     <td>Age stages</td>
   </tr>
   <tr>
-    <td><img src="https://github.com/Wornox/AnimalFarmFramework/blob/main/PublishedArticles/Evo/Images/GeneTypes/Speed5.png" alt="Speed" height="180" width="400"/></td>
-    <td><img src="https://github.com/Wornox/AnimalFarmFramework/blob/main/PublishedArticles/Evo/Images/GeneTypes/Reproduction.png" alt="Reproduction" height="180" width="400"/></td>
-    <td><img src="https://github.com/Wornox/AnimalFarmFramework/blob/main/PublishedArticles/Evo/Images/GeneTypes/Metabolism.png" alt="Metabolism" height="180" width="400"/></td>
+    <td><img src="https://github.com/Wornox/AnimalFarmFramework/blob/main/PublishedArticles/Evo/Images/GeneTypes/Speed5.png" alt="Speed" height="160" width="400"/></td>
+    <td><img src="https://github.com/Wornox/AnimalFarmFramework/blob/main/PublishedArticles/Evo/Images/GeneTypes/Reproduction.png" alt="Reproduction" height="160" width="400"/></td>
+    <td><img src="https://github.com/Wornox/AnimalFarmFramework/blob/main/PublishedArticles/Evo/Images/GeneTypes/Metabolism.png" alt="Metabolism" height="160" width="400"/></td>
   </tr>
   <tr>
     <td>Speed gene</td>
@@ -37,9 +37,9 @@ This article introduces a gene evolution approach in an extended predator-prey m
     <td>Metabolism gene</td>
   </tr>
   <tr>
-    <td><img src="https://github.com/Wornox/AnimalFarmFramework/blob/main/PublishedArticles/Evo/Images/Phases/Exploring.png" alt="Exploring" height="180" width="400"/></td>
-    <td><img src="https://github.com/Wornox/AnimalFarmFramework/blob/main/PublishedArticles/Evo/Images/Phases/MatingChildren.png" alt="MatingChildren" height="180" width="400"/></td>
-    <td><img src="https://github.com/Wornox/AnimalFarmFramework/blob/main/PublishedArticles/Evo/Images/Phases/Metabolism.png" alt="Metabolism" height="180" width="400"/></td>
+    <td><img src="https://github.com/Wornox/AnimalFarmFramework/blob/main/PublishedArticles/Evo/Images/Phases/Exploring.png" alt="Exploring" height="160" width="400"/></td>
+    <td><img src="https://github.com/Wornox/AnimalFarmFramework/blob/main/PublishedArticles/Evo/Images/Phases/MatingChildren.png" alt="MatingChildren" height="160" width="400"/></td>
+    <td><img src="https://github.com/Wornox/AnimalFarmFramework/blob/main/PublishedArticles/Evo/Images/Phases/Metabolism.png" alt="Metabolism" height="160" width="400"/></td>
   </tr>
   <tr>
     <td>Exploring mechaninc</td>
